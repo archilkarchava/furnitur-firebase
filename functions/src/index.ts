@@ -61,8 +61,10 @@ const sendEmail = async (order: IOrder) => {
         from: `${functions.config().gmail.email}`,
         to: recievingEmail,
         subject: 'Furnitur новый заказ',
-        text: `Пользователь ${user.firstName} ${user.lastName} ${user.phoneNumber} хочет сделать заказ на сумму ${order.sum}
-        Товары: ${items.map(({ item, quantity }) => `${item.category.name} ${item.name} - ${item.price} в количестве ${quantity} шт.\n`)}`
+        text: `
+        Пользователь ${user.firstName} ${user.lastName} ${user.phoneNumber} хочет сделать заказ на сумму ${order.sum}
+        Товары: ${items.map(({ item, quantity }) => `${item.category.name} ${item.name} - ${item.price} в количестве ${quantity} шт.\n`)}
+        `
     };
     try {
         await mailTransport.sendMail(mailOptions);
@@ -73,32 +75,15 @@ const sendEmail = async (order: IOrder) => {
     return null;
 }
 
-// const asyncForEach = async (array: Array<any>, callback: any) => {
-//     for (let index = 0; index < array.length; index++) {
-//         await callback(array[index], index, array)
-//     }
-// }
-
-export const sendEmailWithNewOrder = functions.firestore.document('orders/{orderId}').onWrite((change, context) => {
+export const sendEmailWithNewOrder = functions.firestore.document('orders/{orderId}').onWrite(async (change, context) => {
     const newOrder: IFirebaseRawOrder | undefined = change.after.exists ? change.after.data() as IFirebaseRawOrder : undefined;
     if (!newOrder) {
         console.error("Error: couldn't retrieve data from database");
         return null;
     }
     console.log(JSON.stringify(newOrder, null, 4));
-    // newOrder.items.forEach(async (item: any) => {
-    //     item.item = await item.item.get();
-    //     console.log(JSON.stringify(item.item, null, 4));
-    //     item.item.category = await item.item.category.get();
-    //     console.log(JSON.stringify(item.item.category, null, 4));
-    // });
-    // tslint:disable-next-line: no-floating-promises
-    // const resultOrder = newOrder.items.map(async (item: any) => {
-    //     item.item = await item.item.get();
-    //     item.item.category = await item.item.category.get();
-    // })
     const items: Array<{ item: IProduct, quantity: number }> = []
-    newOrder.items.forEach(async (itemData) => {
+    for (const itemData of newOrder.items) {
         await itemData.item.get().then(async snap => {
             const curItem: { item: IFirebaseRawProduct, quantity: number } = { item: snap.data() as IFirebaseRawProduct, quantity: itemData.quantity };
 
@@ -110,7 +95,7 @@ export const sendEmailWithNewOrder = functions.firestore.document('orders/{order
                 // console.log(curItem);
             })
         })
-    })
+    }
     const orderData = {
         ...newOrder,
         items: items
