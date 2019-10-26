@@ -62,9 +62,9 @@ const sendEmail = async (order: IOrder) => {
         to: recievingEmail,
         subject: 'Furnitur новый заказ',
         text: `
-        Пользователь ${user.firstName} ${user.lastName} ${user.phoneNumber} хочет сделать заказ на сумму ${order.sum}
-        Товары: ${items.map(({ item, quantity }) => `${item.category.name} ${item.name} - ${item.price} в количестве ${quantity} шт.\n`)}
-        `
+Пользователь ${user.firstName} ${user.lastName} ${user.phoneNumber} хочет сделать заказ на сумму ${order.sum}
+Товары: 
+${items.map(({ item, quantity }) => `   ${item.category.name} ${item.name} - ${item.price} в количестве ${quantity} шт.,`).join('\n')}`
     };
     try {
         await mailTransport.sendMail(mailOptions);
