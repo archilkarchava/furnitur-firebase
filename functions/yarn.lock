@@ -68,7 +68,7 @@
     retry-request "^4.0.0"
     teeny-request "^5.2.1"
 
-"@google-cloud/firestore@^2.0.0", "@google-cloud/firestore@^2.5.0":
+"@google-cloud/firestore@^2.0.0":
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/@google-cloud/firestore/-/firestore-2.5.0.tgz#1e470c6966683d7ddaa00415550c8d05b45143bb"
   integrity sha512-pe8t2oDpDDGLVdhWRTxbKfMglwqE5U/4wdnX7oOAVeifHs11PgBuvUuJw1XLlV0CorjU3/zKzgKXY/XRjuy4uQ==
@@ -1145,9 +1145,9 @@ lodash.once@^4.0.0:
   integrity sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=
 
 lodash@^4.17.14, lodash@^4.17.5:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.19"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
+  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
 long@^4.0.0:
   version "4.0.0"
